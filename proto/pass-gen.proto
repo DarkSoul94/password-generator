@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package passwordGenerator;
+
+option go_package = "github.com/DarkSoul94/password-generator/api";
+
+service PasswordGenerator {
+  rpc Generate (PassParam) returns (GenResult);
+}
+
+message PassParam {
+  int32 Length = 1;
+  int32 DigitsCount = 2;
+  bool WithUpper = 3;
+  bool AllowRepeat = 4;
+}
+
+message GenResult {
+  string Password = 1;
+}

@@ -1,12 +1,10 @@
-package server
+package httpserver
 
 import (
 	"context"
 	"log"
 	"net"
 	"net/http"
-	"os"
-	"os/signal"
 	"time"
 
 	"github.com/DarkSoul94/password-generator/app"
@@ -31,7 +29,7 @@ func NewApp() *App {
 }
 
 // Run run application
-func (a *App) Run(port string) error {
+func (a *App) Run(port string) {
 	router := gin.New()
 	if viper.GetBool("app.release") {
 		gin.SetMode(gin.ReleaseMode)
@@ -57,17 +55,12 @@ func (a *App) Run(port string) error {
 		panic(err)
 	}
 
-	go func(l net.Listener) {
-		if err := a.httpServer.Serve(l); err != nil {
-			log.Fatalf("Failed to listen and serve: %+v", err)
-		}
-	}(l)
+	if err := a.httpServer.Serve(l); err != nil {
+		log.Fatalf("Failed to listen and serve: %+v", err)
+	}
+}
 
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, os.Interrupt, os.Interrupt)
-
-	<-quit
-
+func (a *App) Stop() error {
 	ctx, shutdown := context.WithTimeout(context.Background(), 5*time.Second)
 	defer shutdown()
 

@@ -22,6 +22,8 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871 // indirect
 	golang.org/x/sys v0.0.0-20211124211545-fe61309f8881 // indirect
+	google.golang.org/grpc v1.41.0
+	google.golang.org/protobuf v1.27.1
 	gopkg.in/ini.v1 v1.66.1 // indirect
 	gorm.io/driver/postgres v1.3.5
 )

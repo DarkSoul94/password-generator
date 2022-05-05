@@ -3,14 +3,15 @@ package grpcserver
 import (
 	"fmt"
 	"net"
-	pb "github.com/DarkSoul94/password-generator/proto"
-appgrpc "github.com/DarkSoul94/password-generator/app/delivery/grpc"
-appusecase "github.com/DarkSoul94/password-generator/app/usecase"
 
-"google.golang.org/grpc"
+	appgrpc "github.com/DarkSoul94/password-generator/app/delivery/grpc"
+	appusecase "github.com/DarkSoul94/password-generator/app/usecase"
+	pb "github.com/DarkSoul94/password-generator/proto"
+
+	"google.golang.org/grpc"
 )
 
-type Deps struct{
+type Deps struct {
 	PassGenHandler pb.PasswordGeneratorServer
 }
 
@@ -22,7 +23,7 @@ type App struct {
 
 func NewApp() *App {
 	uc := appusecase.NewUsecase()
-	
+
 	return &App{
 		Deps: Deps{
 			PassGenHandler: appgrpc.NewHandler(uc),
